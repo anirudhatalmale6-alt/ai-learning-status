@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026 · Phase 1 built';
+window.UPDATED = '13 September 2026 · Phase 2 built';
 
 window.PHASES = [
   {
@@ -69,13 +69,31 @@ window.PHASES = [
     id: 2,
     name: 'Curriculum engine',
     goal: 'The part that is genuinely hard, and the part a general chatbot cannot copy.',
+    scope: 'One engine, board-specific data — CBSE and Maharashtra State Board both running on it',
     tasks: [
-      { t: 'Board → class → subject → chapter → topic → concept → learning objective schema', s: 'todo' },
-      { t: 'Prerequisite graph between concepts', s: 'todo' },
-      { t: 'Content admin panel — create, review, approve, publish, archive', s: 'todo' },
-      { t: 'Academic-year versioning (old syllabus never overwritten)', s: 'todo' },
-      { t: 'Content validation pipeline — out-of-syllabus check before publish', s: 'todo' },
-      { t: 'Second board onboarded against the same engine', s: 'todo' }
+      { t: 'Board → class → subject → unit → chapter → topic → concept → learning objective schema', s: 'done' },
+      { t: 'Prerequisite graph between concepts', s: 'done',
+        note: 'Resolves transitively, so "weak at lenses because refraction is weak" is computed '
+            + 'rather than guessed. Cycles and prerequisites pointing outside the syllabus are '
+            + 'validation errors, not surprises found in production.' },
+      { t: 'Content admin panel — browse, inspect and validate', s: 'prog',
+        note: 'Built and working: syllabus switching, statistics, the full curriculum tree with '
+            + 'question-difficulty coverage per concept, validation, and version history. NOT yet '
+            + 'built: creating and editing content in the panel, and the reviewer approval workflow. '
+            + 'Those need the backend and a login to attach an approver identity to.' },
+      { t: 'Academic-year versioning (old syllabus never overwritten)', s: 'done',
+        note: 'A syllabus has effectiveFrom / effectiveTo dates and is never edited in place. A '
+            + 'child\'s syllabus is resolved once at registration and stored by id, so next year\'s '
+            + 'version going live cannot silently move a student mid-course.' },
+      { t: 'Content validation pipeline — out-of-syllabus check before publish', s: 'done',
+        note: 'Tested to REJECT: a missing explanation level, a concept with no questions, an '
+            + 'answer index out of range, a prerequisite cycle, and a prerequisite pointing outside '
+            + 'its own syllabus are all caught and block publication.' },
+      { t: 'Second board onboarded against the same engine', s: 'done',
+        note: 'Maharashtra State Board Class 10 Science added as ONE data file. No change to the '
+            + 'engine, the tutor, the mastery model or any screen. Its shape genuinely differs from '
+            + 'CBSE — two chapters instead of one, and topics (total internal reflection, '
+            + 'dispersion) that CBSE Class 10 treats elsewhere.' }
     ]
   },
   {
@@ -248,5 +266,20 @@ window.SHOTS = [
   { src: 'screenshots/app-08-parent.png',
     caption: 'Parent dashboard. The summary sentence is generated from the numbers, so it cannot claim progress the data does not show.' },
   { src: 'screenshots/app-09-phone-home.png',
-    caption: 'The same student home on a phone.' }
+    caption: 'The same student home on a phone.' },
+
+  { src: 'screenshots/p2-00-register-boards.png',
+    caption: 'Phase 2 — registration now offers every board that has a published syllabus behind it. The list is generated from the content, so a board can never be advertised with nothing behind it.' },
+  { src: 'screenshots/p2-02-msb-home.png',
+    caption: 'Phase 2 — the same application running Maharashtra State Board. Two chapters instead of CBSE\'s one, and a different concept list. No code changed; only a data file was added.' },
+  { src: 'screenshots/p2-03-msb-tir.png',
+    caption: 'Phase 2 — Total Internal Reflection, a Maharashtra Board topic CBSE Class 10 treats elsewhere. A board is not a relabelling of another board.' },
+  { src: 'screenshots/p2-04-msb-dispersion.png',
+    caption: 'Phase 2 — dispersion through a prism, with the spectrum drawn in the order the physics actually produces.' },
+  { src: 'screenshots/p2-05-admin.png',
+    caption: 'Phase 2 — the content admin panel. Switch syllabus, see its statistics, status, version and effective dates, and run validation.' },
+  { src: 'screenshots/p2-06-admin-tree.png',
+    caption: 'Phase 2 — the curriculum tree: every chapter, topic and concept with its objectives, question counts by difficulty, and prerequisites. "Thin" flags a concept that cannot support adaptive practice yet.' },
+  { src: 'screenshots/p2-09-parent-msb.png',
+    caption: 'Phase 2 — the parent dashboard, now grouping progress by chapter because a syllabus is not always a single chapter.' }
 ];
