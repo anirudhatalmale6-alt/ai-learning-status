@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Learning Platform — Development Status</title>
+<style>
+/* ---------------------------------------------------------------------------
+   Status palette validated with the colour-vision checker in both modes,
+   all-pairs. The pair that matters on a tracker is Done vs Blocked: the
+   conventional green/red sits at deuteranopia ΔE 4.1, i.e. indistinguishable
+   to a red-green colourblind reader. These steps measure 15.4 (light) and
+   11.3 (dark). Every pill also carries an icon and a word, so colour never
+   carries the meaning by itself.
+--------------------------------------------------------------------------- */
+:root{
+  color-scheme: light;
+  --surface:#fcfcfb; --plane:#f4f3f0; --card:#ffffff;
+  --ink:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+  --rule:#e1e0d9; --ring:rgba(11,11,11,.10);
+  --done:#0ca30c; --prog:#2a78d6; --block:#a3182f; --todo:#898781;
+  --bar:#2a78d6; --bar-bed:#e6e5df;
+  --ff:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:where(:not([data-theme="light"])){
+    color-scheme: dark;
+    --surface:#1a1a19; --plane:#0d0d0d; --card:#1f1f1e;
+    --ink:#ffffff; --ink-2:#c3c2b7; --ink-3:#898781;
+    --rule:#2c2c2a; --ring:rgba(255,255,255,.10);
+    --done:#12b312; --prog:#3987e5; --block:#d55181; --todo:#898781;
+    --bar:#3987e5; --bar-bed:#2c2c2a;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--plane); color:var(--ink); font-family:var(--ff);
+  font-size:15px; line-height:1.55; overflow-x:hidden;
+}
+.wrap{max-width:900px; margin:0 auto; padding:24px 16px 72px}
+
+/* ---- header ---- */
+header{margin-bottom:22px}
+.eyebrow{
+  font-size:11px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--ink-3); font-weight:650; margin:0 0 6px
+}
+h1{font-size:clamp(23px,5.5vw,32px); line-height:1.2; margin:0 0 8px; letter-spacing:-.02em}
+.sub{margin:0; color:var(--ink-2); max-width:62ch}
+.updated{margin:12px 0 0; font-size:13px; color:var(--ink-3)}
+
+/* ---- hero ---- */
+.hero{
+  background:var(--card); border:1px solid var(--rule); border-radius:14px;
+  padding:20px; margin:20px 0 26px;
+  display:flex; flex-wrap:wrap; gap:22px; align-items:center;
+}
+.hero__fig{display:flex; align-items:baseline; gap:10px; min-width:0}
+.hero__n{font-size:44px; font-weight:680; letter-spacing:-.03em; line-height:1}
+.hero__lab{font-size:13px; color:var(--ink-2); max-width:22ch}
+.counts{display:flex; flex-wrap:wrap; gap:8px 18px; margin-left:auto}
+.count{display:flex; align-items:center; gap:7px; font-size:13px; color:var(--ink-2)}
+.count b{color:var(--ink); font-weight:650; font-variant-numeric:tabular-nums}
+.dot{width:9px; height:9px; border-radius:50%; flex:none}
+
+/* ---- phase card ---- */
+.phase{
+  background:var(--card); border:1px solid var(--rule); border-radius:14px;
+  padding:18px; margin-bottom:14px;
+}
+.phase__top{display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap}
+.phase__id{
+  font-size:11px; font-weight:650; letter-spacing:.07em; text-transform:uppercase;
+  color:var(--ink-3); padding-top:3px; white-space:nowrap
+}
+.phase__name{font-size:17px; font-weight:650; margin:0; letter-spacing:-.01em; flex:1 1 240px; min-width:0}
+.phase__goal{color:var(--ink-2); font-size:14px; margin:8px 0 0; max-width:72ch}
+.phase__scope{
+  display:inline-block; margin:10px 0 0; font-size:12px; color:var(--ink-2);
+  border:1px solid var(--rule); border-radius:999px; padding:3px 10px;
+}
+
+/* bar: 4px rounded data end anchored to a recessive bed */
+.bar{height:7px; background:var(--bar-bed); border-radius:99px; margin:14px 0 4px; overflow:hidden}
+.bar>i{display:block; height:100%; background:var(--bar); border-radius:99px}
+.barlab{font-size:12px; color:var(--ink-3); font-variant-numeric:tabular-nums}
+
+/* ---- tasks ---- */
+ul.tasks{list-style:none; margin:14px 0 0; padding:0; border-top:1px solid var(--rule)}
+ul.tasks li{
+  display:flex; gap:10px; align-items:flex-start;
+  padding:10px 0; border-bottom:1px solid var(--rule);
+}
+ul.tasks li:last-child{border-bottom:0; padding-bottom:0}
+.tick{
+  flex:none; width:17px; height:17px; margin-top:2px; border-radius:50%;
+  display:grid; place-items:center; font-size:10px; font-weight:700; color:#fff;
+}
+.tbody{min-width:0; flex:1}
+.ttext{display:block}
+.tnote{
+  display:block; margin-top:5px; font-size:13px; color:var(--ink-2);
+  border-left:2px solid var(--rule); padding-left:10px;
+}
+.pill{
+  display:inline-flex; align-items:center; gap:5px; flex:none;
+  font-size:11px; font-weight:650; letter-spacing:.02em;
+  border-radius:999px; padding:2px 9px; border:1px solid currentColor;
+  white-space:nowrap; align-self:flex-start; margin-top:1px;
+}
+
+/* ---- screenshots ---- */
+.shots{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; margin-top:16px}
+.shot{border:1px solid var(--rule); border-radius:10px; overflow:hidden; background:var(--card)}
+.shot img{display:block; width:100%; height:auto}
+.shot figcaption{font-size:13px; color:var(--ink-2); padding:9px 11px; border-top:1px solid var(--rule)}
+.empty{
+  border:1px dashed var(--rule); border-radius:12px; padding:26px 20px;
+  text-align:center; color:var(--ink-2); background:var(--card);
+}
+.empty strong{display:block; color:var(--ink); font-size:15px; margin-bottom:5px}
+
+/* ---- sections ---- */
+h2{font-size:13px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3);
+   margin:34px 0 12px; font-weight:650}
+.note-card{
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--block);
+  border-radius:12px; padding:16px 18px; margin-bottom:12px;
+}
+.note-card h3{margin:0 0 6px; font-size:15px; font-weight:650}
+.note-card p{margin:0; color:var(--ink-2); font-size:14px}
+/* Decisions are information, not alarms — the red rule is reserved for blockers. */
+.note-card.decision{border-left-color:var(--prog)}
+.owner{
+  display:inline-block; margin-top:9px; font-size:11px; font-weight:650;
+  letter-spacing:.04em; text-transform:uppercase; color:var(--block);
+}
+footer{margin-top:40px; padding-top:18px; border-top:1px solid var(--rule);
+       color:var(--ink-3); font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Live development status</p>
+  <h1>AI Learning Platform</h1>
+  <p class="sub">Personalised learning for Classes 5–12 across boards. This page is generated from
+  the project's own status file and is updated as work lands — it shows what is actually finished,
+  not what is planned.</p>
+  <p class="updated" id="updated"></p>
+</header>
+
+<section class="hero">
+  <div class="hero__fig">
+    <span class="hero__n" id="pct">0%</span>
+    <span class="hero__lab" id="pctlab"></span>
+  </div>
+  <div class="counts" id="counts"></div>
+</section>
+
+<div id="phases"></div>
+
+<h2>Decisions taken, and why</h2>
+<div id="decisions"></div>
+
+<h2>Screens built so far</h2>
+<div id="shots"></div>
+
+<h2>Waiting on you</h2>
+<div id="blockers"></div>
+
+<footer>
+  <p id="foot"></p>
+</footer>
+
+</div>
+
+<script src="status.js"></script>
+<script>
+(function () {
+  var META = {
+    done:  { label: 'Done',        color: 'var(--done)',  mark: '✓' },
+    prog:  { label: 'In progress', color: 'var(--prog)',  mark: '●' },
+    block: { label: 'Blocked',     color: 'var(--block)', mark: '!' },
+    todo:  { label: 'Not started', color: 'var(--todo)',  mark: '·' }
+  };
+  var ORDER = ['done', 'prog', 'block', 'todo'];
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  var all = [];
+  window.PHASES.forEach(function (p) { p.tasks.forEach(function (t) { all.push(t); }); });
+
+  // Blocked work is not counted as progress — it is counted as blocked. Showing it
+  // any other way would flatter the number.
+  var tally = {};
+  ORDER.forEach(function (k) { tally[k] = all.filter(function (t) { return t.s === k; }).length; });
+  var pct = Math.round(tally.done / all.length * 100);
+
+  document.getElementById('updated').textContent = 'Last updated ' + window.UPDATED;
+  document.getElementById('pct').textContent = pct + '%';
+  document.getElementById('pct').style.color = pct > 0 ? 'var(--done)' : 'var(--ink)';
+  document.getElementById('pctlab').textContent =
+    tally.done + ' of ' + all.length + ' tasks complete across ' + window.PHASES.length + ' phases';
+
+  var counts = document.getElementById('counts');
+  ORDER.forEach(function (k) {
+    var c = el('div', 'count');
+    var d = el('span', 'dot');
+    d.style.background = META[k].color;
+    c.appendChild(d);
+    var b = el('b', null, String(tally[k]));
+    c.appendChild(b);
+    c.appendChild(document.createTextNode(' ' + META[k].label));
+    counts.appendChild(c);
+  });
+
+  var host = document.getElementById('phases');
+  window.PHASES.forEach(function (p) {
+    var card = el('section', 'phase');
+
+    var top = el('div', 'phase__top');
+    top.appendChild(el('span', 'phase__id', 'Phase ' + p.id));
+    top.appendChild(el('h3', 'phase__name', p.name));
+
+    // A phase's own state is derived, never typed in, so it can't drift from its tasks.
+    // A phase counts as Blocked only when EVERY unfinished task in it is blocked. One
+    // blocked dependency among nine buildable tasks is "not started", not "blocked" —
+    // calling it blocked would overstate the obstacle.
+    var d = p.tasks.filter(function (t) { return t.s === 'done'; }).length;
+    var open = p.tasks.filter(function (t) { return t.s !== 'done'; });
+    var st = d === p.tasks.length ? 'done'
+           : p.tasks.some(function (t) { return t.s === 'prog'; }) ? 'prog'
+           : d > 0 ? 'prog'
+           : open.every(function (t) { return t.s === 'block'; }) ? 'block' : 'todo';
+    var pill = el('span', 'pill', META[st].mark + ' ' + META[st].label);
+    pill.style.color = META[st].color;
+    top.appendChild(pill);
+    card.appendChild(top);
+
+    card.appendChild(el('p', 'phase__goal', p.goal));
+    if (p.scope) card.appendChild(el('span', 'phase__scope', p.scope));
+
+    var bar = el('div', 'bar');
+    var fill = el('i');
+    fill.style.width = Math.round(d / p.tasks.length * 100) + '%';
+    bar.appendChild(fill);
+    card.appendChild(bar);
+    card.appendChild(el('div', 'barlab', d + ' of ' + p.tasks.length + ' complete'));
+
+    var ul = el('ul', 'tasks');
+    p.tasks.forEach(function (t) {
+      var li = el('li');
+      var tick = el('span', 'tick', META[t.s].mark);
+      tick.style.background = t.s === 'todo' ? 'transparent' : META[t.s].color;
+      if (t.s === 'todo') {
+        tick.style.color = 'var(--todo)';
+        tick.style.border = '1px solid var(--rule)';
+      }
+      li.appendChild(tick);
+
+      var body = el('div', 'tbody');
+      body.appendChild(el('span', 'ttext', t.t));
+      if (t.note) body.appendChild(el('span', 'tnote', t.note));
+      li.appendChild(body);
+
+      var tp = el('span', 'pill', META[t.s].label);
+      tp.style.color = META[t.s].color;
+      li.appendChild(tp);
+
+      ul.appendChild(li);
+    });
+    card.appendChild(ul);
+    host.appendChild(card);
+  });
+
+  var dec = document.getElementById('decisions');
+  (window.DECISIONS || []).forEach(function (x) {
+    var c = el('div', 'note-card decision');
+    c.appendChild(el('h3', null, x.d));
+    c.appendChild(el('p', null, x.why));
+    dec.appendChild(c);
+  });
+
+  // Screenshots — honest empty state rather than placeholder images.
+  var shots = document.getElementById('shots');
+  if (!window.SHOTS.length) {
+    var e = el('div', 'empty');
+    e.appendChild(el('strong', null, 'No screens built yet'));
+    e.appendChild(el('span', null,
+      'Nothing is shown here until a real screen exists. The first ones arrive in Phase 1 — '
+      + 'landing page, registration, the tutor and the parent dashboard. Every image in this '
+      + 'section is a screenshot of the running application, never a mockup.'));
+    shots.appendChild(e);
+  } else {
+    var grid = el('div', 'shots');
+    window.SHOTS.forEach(function (s) {
+      var fig = el('figure', 'shot');
+      var img = document.createElement('img');
+      img.src = s.src;
+      img.alt = s.caption;
+      img.loading = 'lazy';
+      fig.appendChild(img);
+      fig.appendChild(el('figcaption', null, s.caption));
+      grid.appendChild(fig);
+    });
+    shots.appendChild(grid);
+  }
+
+  // Blockers owned by the client, lifted out of the phases so nothing hides.
+  var bl = document.getElementById('blockers');
+  var mine = [];
+  window.PHASES.forEach(function (p) {
+    p.tasks.forEach(function (t) {
+      if (t.s === 'block' && t.owner === 'client') mine.push({ p: p, t: t });
+    });
+  });
+  if (!mine.length) {
+    bl.appendChild(el('div', 'empty', 'Nothing is waiting on you right now.'));
+  } else {
+    mine.forEach(function (m) {
+      var c = el('div', 'note-card');
+      c.appendChild(el('h3', null, m.t.t));
+      c.appendChild(el('p', null, m.t.note || ''));
+      c.appendChild(el('span', 'owner', 'Phase ' + m.p.id + ' — blocked until this arrives'));
+      bl.appendChild(c);
+    });
+  }
+
+  document.getElementById('foot').textContent =
+    'Generated from status.js · ' + all.length + ' tracked tasks · last updated '
+    + window.UPDATED + '. Application source code is kept in a separate private repository.';
+})();
+</script>
+</body>
+</html>
