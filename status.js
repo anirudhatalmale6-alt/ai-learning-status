@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026';
+window.UPDATED = '13 September 2026 · Phase 1 built';
 
 window.PHASES = [
   {
@@ -34,19 +34,35 @@ window.PHASES = [
     id: 1,
     name: 'Proof slice — the five-minute magic moment',
     goal: 'One complete learning loop, working for real, on one chapter. The thing you put in front of parents and schools to find out whether anyone will pay.',
-    scope: 'CBSE · Class 10 · Science · one chapter',
+    scope: 'CBSE · Class 10 · Science · Light — Reflection and Refraction · 6 concepts, 24 questions',
     tasks: [
-      { t: 'Landing page', s: 'todo' },
-      { t: 'Parent-primary account architecture (parent account, child profiles beneath)', s: 'todo' },
-      { t: 'Registration — email and mobile mandatory, student date of birth, parental consent captured', s: 'todo' },
-      { t: 'Board / class / medium / subject / chapter selection', s: 'todo' },
-      { t: 'AI tutor grounded in the chapter: Explain, Simplify, Give Example, Hint, Test Me', s: 'todo' },
-      { t: 'Adaptive practice questions', s: 'todo' },
-      { t: 'Concept mastery score, calculated not cosmetic', s: 'todo' },
-      { t: 'Parent dashboard for that child', s: 'todo' },
-      { t: 'Works properly in a phone browser', s: 'todo' },
+      { t: 'Landing page', s: 'done' },
+      { t: 'Parent-primary account architecture (parent account, child profiles beneath)', s: 'done' },
+      { t: 'Registration — email and mobile mandatory, student date of birth, parental consent captured', s: 'done',
+        note: 'Tested to REJECT, not just to accept: a missing date of birth, an unticked consent box, '
+            + 'a short mobile number and a malformed email each block the account. The date of birth '
+            + 'drives an age check that states whether parental consent applies.' },
+      { t: 'Board / class / medium / subject / chapter selection', s: 'done' },
+      { t: 'Tutor grounded in the chapter: Explain, Simplify, Give Example, Exam answer, diagram, Hint', s: 'done',
+        note: 'Every answer is drawn from the chapter\'s own content and names the curriculum node it '
+            + 'came from, so it cannot wander out of syllabus. That retrieval step is the grounding the '
+            + 'blueprint asks for. A generative model plugs into the same interface once a key exists.' },
+      { t: 'Adaptive practice questions', s: 'done',
+        note: 'Verified climbing easy → medium → hard on correct answers, and stepping back down after '
+            + 'a wrong one rather than pressing on.' },
+      { t: 'Concept mastery score, calculated not cosmetic', s: 'done',
+        note: 'Built from accuracy weighted by question difficulty, a penalty when a hint was used, a '
+            + 'confidence factor so two lucky answers do not read as mastery, and decay over time — '
+            + 'which is what will drive revision scheduling in Phase 3.' },
+      { t: 'Parent dashboard for that child', s: 'done',
+        note: 'Includes the consent record — who consented, to which version, when — and states plainly '
+            + 'that behavioural tracking is off.' },
+      { t: 'Works properly in a phone browser', s: 'done',
+        note: 'No horizontal overflow at 390px or 1280px.' },
       { t: 'AI provider key or funded budget', s: 'block', owner: 'client',
-        note: 'Every tutor answer costs money per question. I cannot run this on my own account.' }
+        note: 'The tutor answers from the curriculum today, which costs nothing and cannot hallucinate. '
+            + 'Switching on a generative model needs a key — every answer then costs money per question, '
+            + 'and I cannot run that on my own account.' }
     ]
   },
   {
@@ -210,5 +226,27 @@ window.DECISIONS = [
 ];
 
 /* Screens land here as they are built. Each entry: { src, caption }.
-   The section renders an honest empty state until the first one exists. */
-window.SHOTS = [];
+   Every one of these is a capture of the running application, taken by driving
+   it end to end — not a mockup, and not a design that was never wired up. */
+window.SHOTS = [
+  { src: 'screenshots/app-01-landing.png',
+    caption: 'Landing page.' },
+  { src: 'screenshots/app-02-register.png',
+    caption: 'Registration. The parent is the account holder; the student\'s date of birth is mandatory and drives the age check; consent is explicit and recorded.' },
+  { src: 'screenshots/app-03-home.png',
+    caption: 'Student home — today\'s mission is chosen by the engine, not picked at random: an unmet prerequisite wins over a new concept.' },
+  { src: 'screenshots/app-04-tutor.png',
+    caption: 'The tutor. Explain / Simplify / Give example / Exam answer, and each reply names the curriculum node it came from.' },
+  { src: 'screenshots/app-04c-tutor-diagram.png',
+    caption: 'Diagram view — drawn as SVG, so it stays sharp on any screen.' },
+  { src: 'screenshots/app-05-practice.png',
+    caption: 'Practice with a hint open. Hints come from the chapter\'s common-mistake list, so they point at the trap without giving the answer away.' },
+  { src: 'screenshots/app-06-verdict.png',
+    caption: 'Answer feedback — the correct option is marked and the working is shown, whether the student was right or wrong.' },
+  { src: 'screenshots/app-07-score.png',
+    caption: 'End of a practice run, with the recalculated mastery for that concept.' },
+  { src: 'screenshots/app-08-parent.png',
+    caption: 'Parent dashboard. The summary sentence is generated from the numbers, so it cannot claim progress the data does not show.' },
+  { src: 'screenshots/app-09-phone-home.png',
+    caption: 'The same student home on a phone.' }
+];
