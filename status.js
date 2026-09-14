@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026 · Phases 7, 8 and 9 in progress';
+window.UPDATED = '14 September 2026 · Phase 10 cost controls and data rights';
 
 window.PHASES = [
   {
@@ -261,8 +261,24 @@ window.PHASES = [
     tasks: [
       { t: 'Legal opinion on the personalisation engine under DPDP s.9(3)', s: 'block', owner: 'client',
         note: 'Every user of a Class 5–12 platform is a child under Indian law. s.9(3) prohibits behavioural monitoring of children regardless of consent — and "the AI learns the student’s learning behaviour" is the core of this product. This needs an Indian data-protection lawyer before the engine is built, not after.' },
-      { t: 'Privacy policy and verifiable parental consent records', s: 'todo' },
-      { t: 'AI cost controls — model routing, caching, per-tier daily quotas', s: 'todo' },
+      { t: 'Privacy page, data export and erasure', s: 'done',
+        note: 'Under the DPDP Act a parent can ask what you hold about their child and ask you '
+            + 'to erase it. Both are real here, not described: the export downloads the ACTUAL '
+            + 'stored record rather than a summary of it, and the erasure genuinely removes the '
+            + 'account, the consent record and every answer. Verified by exporting, reading the '
+            + 'file, deleting, and checking the storage is empty.' },
+      { t: 'AI cost controls — model routing, caching, per-tier daily quotas', s: 'done',
+        note: 'Four controls in order of what they save: curriculum answers cost nothing, a '
+            + 'cache means one right answer is paid for once, cheap models take cheap jobs, and '
+            + 'a hard daily cap per tier stops one heavy user running up an unbounded bill. '
+            + 'A refused request explains itself and points at the free path rather than just '
+            + 'saying no.' },
+      { t: 'Unit-economics calculator', s: 'done',
+        note: 'The calculation the blueprint\'s ₹199-599 pricing never shows, and the first '
+            + 'thing an investor asks for. It found a real problem in my own draft tiers: Pro at '
+            + '250 AI answers a day would have cost ₹1,460 a month against ₹599 — an ₹861 loss '
+            + 'per heavy user. The cap is now 100/day, which is the highest that price can '
+            + 'carry. Every paid tier is now provably safe at its own ceiling.' },
       { t: 'Load and performance pass', s: 'todo' },
       { t: 'Security review', s: 'todo' }
     ]
@@ -399,5 +415,16 @@ window.SHOTS = [
   { src: 'screenshots/p8-04-phone-marathi.png',
     caption: 'Phase 8 — Marathi on a phone, using the Devanagari font bundled with the app so it renders even on a device with no Indian-language font installed.' },
   { src: 'screenshots/p7-01-offline.png',
-    caption: 'Phase 7 — the app running with the network switched off. The curriculum, questions and progress are all already on the device.' }
+    caption: 'Phase 7 — the app running with the network switched off. The curriculum, questions and progress are all already on the device.' },
+
+  { src: 'screenshots/p10-01-cost.png',
+    caption: 'Phase 10 — what the AI actually costs per student per month. Move the sliders and the margin moves; the blueprint prices at ₹199-599 but never shows this.' },
+  { src: 'screenshots/p10-05-pro-tier.png',
+    caption: 'Phase 10 — the worst case each tier permits. This is the check that found the Pro tier, as originally drafted, would lose ₹861 a month on a heavy user.' },
+  { src: 'screenshots/p10-02-privacy.png',
+    caption: 'Phase 10 — privacy written for a parent to read: what is collected, and what is deliberately not.' },
+  { src: 'screenshots/p10-06-privacy-rights.png',
+    caption: 'Phase 10 — data rights that actually work. The export is the real stored record; the deletion really deletes.' },
+  { src: 'screenshots/p10-03-phone-cost.png',
+    caption: 'Phase 10 — the cost model on a phone.' }
 ];
