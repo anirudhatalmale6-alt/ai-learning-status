@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026 · Phase 3 built';
+window.UPDATED = '13 September 2026 · Phases 5 and 6 built';
 
 window.PHASES = [
   {
@@ -141,22 +141,48 @@ window.PHASES = [
     id: 5,
     name: 'Gamification',
     goal: 'Make the learning itself the game, rather than bolting a game beside it.',
+    scope: 'Every point is earned by a learning action — there is nothing to collect that does not involve understanding something',
     tasks: [
-      { t: 'XP, levels, streaks, badges', s: 'todo' },
-      { t: 'Daily mission', s: 'todo' },
-      { t: 'Chapter-end challenge', s: 'todo' },
-      { t: 'Personal-best progress instead of public student ranking', s: 'todo',
-        note: 'Deliberate: student data must not appear on a public leaderboard.' }
+      { t: 'XP, levels, streaks, badges', s: 'done',
+        note: 'XP, level and badges are RECOMPUTED from the existing event log every time they '
+            + 'are read. Nothing is stored, so there is no points balance to drift, be edited or '
+            + 'be lost — and no new personal data is collected to support any of it. Verified by '
+            + 'deleting events and watching the total fall.' },
+      { t: 'Daily mission', s: 'done',
+        note: 'Three goals covering the whole loop — learn, practise, recall — rather than three '
+            + 'variations of "answer questions". Counts today only; verified that yesterday\'s '
+            + 'work does not carry over.' },
+      { t: 'Chapter-end challenge', s: 'done',
+        note: 'Eight questions drawn across a WHOLE chapter and spread round-robin across its '
+            + 'concepts, so it tests whether the pieces connect. Locked until most of the chapter '
+            + 'has been attempted — a test on material never taught is not a challenge, it is '
+            + 'just discouraging. No hints, 75% to clear.' },
+      { t: 'Personal-best progress instead of public student ranking', s: 'done',
+        note: 'Progress is measured against the student\'s own previous week and the page says so '
+            + 'in as many words. A ranked list of named children is both a motivation disaster for '
+            + 'the bottom half of a class and, under DPDP, exposure of a child\'s data that is not '
+            + 'worth the engagement.' }
     ]
   },
   {
     id: 6,
     name: 'Teacher & school',
     goal: 'The B2B layer. My recommendation is to pull this forward — schools pay per student per year and do not churn after exam season.',
+    scope: 'First instalment: the class layer. A demonstration class of 22 with per-concept mastery in exactly the shape the student app already produces',
     tasks: [
-      { t: 'Teacher dashboard — classes, students, assignments', s: 'todo' },
+      { t: 'Teacher dashboard — class, students, per-concept view', s: 'done',
+        note: 'The headline is an instruction, not a number: WHICH CONCEPT DO I RE-TEACH THIS '
+            + 'WEEK, with the evidence behind it. That is the question a teacher actually has on '
+            + 'a Monday morning.' },
+      { t: 'Class-level weak-concept analytics', s: 'done',
+        note: 'Reports the SPLIT — secure / developing / struggling — not just an average, '
+            + 'because a class averaging 58% might be everyone mediocre or half secure and half '
+            + 'lost, and those need opposite responses.' },
+      { t: 'Remedial grouping, with the teaching material behind it', s: 'done',
+        note: 'Selects exactly the students below 40% on a concept and attaches that concept\'s '
+            + 'learning objectives and common-mistake list. Deliberately not an AI feature — no '
+            + 'model is needed to do the useful part.' },
       { t: 'AI teaching assistant — generate tests, worksheets, remedial lessons', s: 'todo' },
-      { t: 'Class-level weak-concept analytics', s: 'todo' },
       { t: 'School tenant isolation', s: 'todo' },
       { t: 'School-wide analytics', s: 'todo' }
     ]
@@ -309,5 +335,26 @@ window.SHOTS = [
   { src: 'screenshots/p3-05-revision-done.png',
     caption: 'Phase 3 — end of a session. It refuses to send the student back round a flashcard loop that cannot help them, and points at practice questions instead.' },
   { src: 'screenshots/p3-06-phone-notes.png',
-    caption: 'Phase 3 — notes on a phone. Every route was checked for horizontal overflow at 390, 768 and 1280 pixels.' }
+    caption: 'Phase 3 — notes on a phone. Every route was checked for horizontal overflow at 390, 768 and 1280 pixels.' },
+
+  { src: 'screenshots/p5-01-home-mission.png',
+    caption: 'Phase 5 — level, XP and the daily mission. Three goals covering learn, practise and recall, not three ways of saying "answer questions".' },
+  { src: 'screenshots/p5-02-progress.png',
+    caption: 'Phase 5 — progress measured against the student\'s own previous week. The page states outright that there is no leaderboard of other children, and why.' },
+  { src: 'screenshots/p5-05-badges.png',
+    caption: 'Phase 5 — badges. Each is a pure function of the event log, so none can be awarded twice or lost, and every one shows Earned or Locked in words as well as colour.' },
+  { src: 'screenshots/p5-03-challenge.png',
+    caption: 'Phase 5 — the chapter challenge: eight questions spread across the whole chapter, no hints, 75% to clear.' },
+  { src: 'screenshots/p5-04-challenge-result.png',
+    caption: 'Phase 5 — the result. A fail is explained in terms of what happens next, not just a score.' },
+  { src: 'screenshots/p6-01-teacher.png',
+    caption: 'Phase 6 — the teacher view leads with an instruction, not a number: which concept to re-teach this week, and the evidence for it.' },
+  { src: 'screenshots/p6-02-teacher-concepts.png',
+    caption: 'Phase 6 — concept by concept across the class, showing the secure / developing / struggling split rather than an average that hides it.' },
+  { src: 'screenshots/p6-03-remedial.png',
+    caption: 'Phase 6 — a remedial group: exactly the students below 40% on that concept, worst first, with the objectives and common mistakes to teach from.' },
+  { src: 'screenshots/p6-04-student.png',
+    caption: 'Phase 6 — one student, concept by concept, for the conversation with a parent.' },
+  { src: 'screenshots/p6-05-phone-teacher.png',
+    caption: 'Phase 6 — the class analytics on a phone, for a teacher checking between lessons.' }
 ];
