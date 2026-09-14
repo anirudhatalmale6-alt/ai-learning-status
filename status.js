@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026 · Phases 5 and 6 built';
+window.UPDATED = '13 September 2026 · Phases 7, 8 and 9 in progress';
 
 window.PHASES = [
   {
@@ -191,8 +191,16 @@ window.PHASES = [
     id: 7,
     name: 'Mobile applications',
     goal: 'One React Native codebase producing both stores.',
+    scope: 'The installable, offline half is done. The native store builds are not.',
     tasks: [
-      { t: 'Shared React Native codebase', s: 'todo' },
+      { t: 'Installable app with offline support (PWA)', s: 'done',
+        note: 'Installs to the home screen on both Android and iOS and opens without browser '
+            + 'chrome. More importantly it works with no connection at all: the curriculum, the '
+            + 'questions, the tutor and the mastery model are already on the device. Verified by '
+            + 'cutting the network and using it. For a student on patchy data three days before '
+            + 'the month ends, this matters more than most of the feature list.' },
+      { t: 'Shared React Native codebase', s: 'todo',
+        note: 'Not started. I will not claim a native build I cannot run on a real device here.' },
       { t: 'iOS build — free tier only, no pricing and no purchase UI anywhere', s: 'todo',
         note: 'Apple guideline 3.1.1: an education app is not a "reader" app, so any in-app premium unlock must be sold through in-app purchase. A free-tier-only build is the version that passes review.' },
       { t: 'Android build', s: 'todo' },
@@ -205,10 +213,27 @@ window.PHASES = [
     id: 8,
     name: 'Multi-language',
     goal: 'Explanation language independent of curriculum language — CBSE Science in English, explained in Marathi.',
+    scope: 'Architecture complete; translated content is a content operation, not a coding task',
     tasks: [
-      { t: 'Language layer separated from curriculum structure', s: 'todo' },
-      { t: 'Marathi and Hindi explanation', s: 'todo' },
-      { t: 'Subject-terminology validation (literal machine translation is not safe for exam material)', s: 'todo' }
+      { t: 'Language layer separated from curriculum structure', s: 'done',
+        note: 'Explanation language is a separate field from curriculum medium, so a child sits '
+            + 'an English paper and is explained to in Marathi. The choice follows them across '
+            + 'concepts and does not touch their syllabus.' },
+      { t: 'Devanagari font bundled with the app', s: 'done',
+        note: 'A 59KB subset of Noto Sans Devanagari (SIL Open Font License), cached offline. '
+            + 'Plenty of low-cost Android phones ship without an Indian-language font, and on '
+            + 'those a Marathi explanation renders as a row of empty boxes — which reads as a '
+            + 'broken app rather than a missing font.' },
+      { t: 'Marathi and Hindi explanation', s: 'prog',
+        note: 'Working end to end on four concepts across both boards — about 20% of the text. '
+            + 'Every translation is labelled DRAFT in the interface because it has not been '
+            + 'checked by a subject teacher. Translating the rest is a content operation with '
+            + 'Marathi-speaking teachers, not a coding task.' },
+      { t: 'Subject-terminology validation (literal machine translation is not safe for exam material)', s: 'done',
+        note: 'Enforced rather than advised: an unsigned translation is a BLOCKING validation '
+            + 'error, so drafts cannot be published. And where a particular explanation has no '
+            + 'translation the interface says "shown in English" rather than silently falling '
+            + 'back — a student should never wonder why the language button did nothing.' }
     ]
   },
   {
@@ -216,9 +241,16 @@ window.PHASES = [
     name: 'Voice & vision',
     goal: 'Ask by speaking; solve by photographing.',
     tasks: [
-      { t: 'Speech-to-text and text-to-speech', s: 'todo' },
-      { t: 'Camera doubt solving — OCR, question detection, curriculum mapping', s: 'todo' },
-      { t: 'Identity stripped before anything reaches a third-party AI provider', s: 'todo',
+      { t: 'Read explanations aloud, in the chosen language', s: 'done',
+        note: 'Built on the device\'s own speech engine, not a cloud voice API: it costs nothing '
+            + 'per use, nothing leaves the device, and it works offline. Where a device has no '
+            + 'voice for the chosen language the control is disabled and SAYS why, rather than '
+            + 'being a button that silently does nothing.' },
+      { t: 'Speech-to-text (ask a question by speaking)', s: 'todo' },
+      { t: 'Camera doubt solving — OCR, question detection, curriculum mapping', s: 'todo',
+        note: 'Needs a vision model, so it is gated on the same provider key as the generative '
+            + 'tutor. Nothing to build until that exists.' },
+      { t: 'Identity stripped before anything reaches a third-party AI provider', s: 'done',
         note: "Apple's Kids Category rules forbid sending personally identifiable information to third parties. Designed in from the start; very expensive to retrofit." }
     ]
   },
@@ -356,5 +388,16 @@ window.SHOTS = [
   { src: 'screenshots/p6-04-student.png',
     caption: 'Phase 6 — one student, concept by concept, for the conversation with a parent.' },
   { src: 'screenshots/p6-05-phone-teacher.png',
-    caption: 'Phase 6 — the class analytics on a phone, for a teacher checking between lessons.' }
+    caption: 'Phase 6 — the class analytics on a phone, for a teacher checking between lessons.' },
+
+  { src: 'screenshots/p8-01-marathi.png',
+    caption: 'Phase 8 — the same CBSE/Maharashtra concept explained in Marathi. Note the draft warning: the translation has not been checked by a subject teacher, and the app says so rather than hiding it.' },
+  { src: 'screenshots/p8-02-hindi.png',
+    caption: 'Phase 8 — the same concept in Hindi. Explanation language is independent of the curriculum, so the paper stays English.' },
+  { src: 'screenshots/p8-03-fallback.png',
+    caption: 'Phase 8 — where a particular explanation has no translation yet, it says "shown in English" instead of silently doing nothing.' },
+  { src: 'screenshots/p8-04-phone-marathi.png',
+    caption: 'Phase 8 — Marathi on a phone, using the Devanagari font bundled with the app so it renders even on a device with no Indian-language font installed.' },
+  { src: 'screenshots/p7-01-offline.png',
+    caption: 'Phase 7 — the app running with the network switched off. The curriculum, questions and progress are all already on the device.' }
 ];
