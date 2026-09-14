@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '13 September 2026 · Phase 2 built';
+window.UPDATED = '13 September 2026 · Phase 3 built';
 
 window.PHASES = [
   {
@@ -100,12 +100,27 @@ window.PHASES = [
     id: 3,
     name: 'Learning loop',
     goal: 'Learn → practise → revise, so knowledge survives past the week it was taught.',
+    scope: 'Both boards · notes, generated flashcards and a revision schedule that asks for itself',
     tasks: [
-      { t: 'Notes engine — quick notes, formula sheet, common mistakes', s: 'todo' },
-      { t: 'Smart flashcards', s: 'todo' },
-      { t: 'Spaced revision engine (3 / 7 / 14 / 30-day review, pulled earlier on failure)', s: 'todo' },
-      { t: 'Adaptive difficulty', s: 'todo' },
-      { t: 'Student learning graph and next-concept recommendation', s: 'todo' }
+      { t: 'Notes engine — one-minute revision, formula sheet, exam guidance, common mistakes', s: 'done',
+        note: 'Assembled from the curriculum the student is already on. Nothing is invented — '
+            + 'revision notes that disagree with the lesson are worse than no notes at all.' },
+      { t: 'Smart flashcards', s: 'done',
+        note: 'Generated from the content rather than authored a second time, from three sources: '
+            + 'the formulae, the chapter\'s common-mistake list, and recall of the question bank. '
+            + 'Add a formula to a syllabus and its card appears; there is nothing to keep in sync.' },
+      { t: 'Spaced revision engine (1 / 3 / 7 / 14 / 30 / 60-day ladder, reset on failure)', s: 'done',
+        note: 'A concept climbs the ladder only if EVERY card in it was recalled — "4 of 6" is not '
+            + 'evidence it can wait a fortnight. Two independent things make a concept due: the '
+            + 'clock, or a mastery score that has decayed far enough that waiting would be '
+            + 'negligent. The second case is flagged Relearn rather than Review, because a '
+            + 'flashcard cannot repair a score that low — it needs practice questions instead.' },
+      { t: 'Adaptive difficulty', s: 'done',
+        note: 'Landed in Phase 1 — recorded here so the phase list stays honest rather than '
+            + 'counting the same work twice.' },
+      { t: 'Student learning graph and next-concept recommendation', s: 'done',
+        note: 'Today\'s mission is chosen by the engine: an unmet prerequisite outranks a new '
+            + 'concept, which outranks one that merely has room to improve.' }
     ]
   },
   {
@@ -281,5 +296,18 @@ window.SHOTS = [
   { src: 'screenshots/p2-06-admin-tree.png',
     caption: 'Phase 2 — the curriculum tree: every chapter, topic and concept with its objectives, question counts by difficulty, and prerequisites. "Thin" flags a concept that cannot support adaptive practice yet.' },
   { src: 'screenshots/p2-09-parent-msb.png',
-    caption: 'Phase 2 — the parent dashboard, now grouping progress by chapter because a syllabus is not always a single chapter.' }
+    caption: 'Phase 2 — the parent dashboard, now grouping progress by chapter because a syllabus is not always a single chapter.' },
+
+  { src: 'screenshots/p3-02-home-due.png',
+    caption: 'Phase 3 — the schedule asks for itself. Two concepts are flagged Relearn because their scores decayed, one is simply overdue for review. The reason is stated on every row.' },
+  { src: 'screenshots/p3-01-notes.png',
+    caption: 'Phase 3 — notes to remember: one-minute revision, formula sheet, what you must be able to do, how to write it in the exam, and where students lose marks.' },
+  { src: 'screenshots/p3-03-card-front.png',
+    caption: 'Phase 3 — a flashcard. Cards are generated from the curriculum, so there is no second copy of the content to keep in sync.' },
+  { src: 'screenshots/p3-04-card-back.png',
+    caption: 'Phase 3 — the answer, with the student judging their own recall. That judgement is what drives the spacing ladder.' },
+  { src: 'screenshots/p3-05-revision-done.png',
+    caption: 'Phase 3 — end of a session. It refuses to send the student back round a flashcard loop that cannot help them, and points at practice questions instead.' },
+  { src: 'screenshots/p3-06-phone-notes.png',
+    caption: 'Phase 3 — notes on a phone. Every route was checked for horizontal overflow at 390, 768 and 1280 pixels.' }
 ];
