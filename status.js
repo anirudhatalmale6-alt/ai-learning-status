@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '14 September 2026 · Phase 10 complete except the legal opinion';
+window.UPDATED = '14 September 2026 · Phase 4 examination engine built';
 
 window.PHASES = [
   {
@@ -128,11 +128,35 @@ window.PHASES = [
     name: 'Assessment & exam',
     goal: 'Practice that resembles the actual paper the student will sit.',
     tasks: [
-      { t: 'Question engine — all twelve question types, tagged by concept and difficulty', s: 'todo' },
-      { t: 'AI question generator, constrained to the curriculum node', s: 'todo' },
-      { t: 'AI answer evaluation for written answers', s: 'todo' },
-      { t: 'Mock exam — board format, real timing, section rules', s: 'todo' },
-      { t: 'Performance report: careless mistakes vs concept mistakes', s: 'todo' },
+      { t: 'Question engine — multiple question types, tagged by concept and difficulty', s: 'done',
+        note: 'Seven types working and individually marked: multiple choice, true/false, '
+            + 'fill-in-the-blank, numerical, CBSE assertion-reason, match-the-following and '
+            + 'written short answer. Each marked on its own terms — a numerical has a '
+            + 'tolerance, because 1.49 is not a wrong answer to a question whose answer is 1.5.' },
+      { t: 'Question packs — the shape previous-year questions will arrive in', s: 'done',
+        note: 'A pack names its syllabus and attaches questions to existing concepts without '
+            + 'touching the syllabus file, so it can be added and withdrawn as one unit. The '
+            + 'out-of-syllabus guard applies to packs too: a pack question pointing at a concept '
+            + 'outside the syllabus is a blocking validation error.' },
+      { t: 'Mock exam — board format, real timing, section rules', s: 'done',
+        note: 'Sections A/B/C with their own mark values, a 45-minute clock that submits the '
+            + 'paper itself at zero, free movement between questions, and no hints. Retakes draw '
+            + 'a different paper where the bank has spare questions — verified as four distinct '
+            + 'papers across four attempts.' },
+      { t: 'Part-marked written answers', s: 'done',
+        note: 'A written answer earns marks per point made, so "stated one law of two" scores '
+            + '1 of 2 rather than zero. Stated honestly on screen: it matches required terms '
+            + 'rather than judging phrasing, so it is practice marking, not a teacher\'s marking.' },
+      { t: 'Performance report: careless mistakes vs concept mistakes', s: 'done',
+        note: 'The distinction is made from evidence: a loss on a concept the student already '
+            + 'scores well on, or answered unusually fast, is a careless slip; a loss on a '
+            + 'concept their record shows they have not understood is a gap. Anything ambiguous '
+            + 'is left unclassified rather than guessed. Those two need opposite responses, '
+            + 'which is why "revise everything" is such useless advice.' },
+      { t: 'AI question generator, constrained to the curriculum node', s: 'todo',
+        note: 'Needs the provider key.' },
+      { t: 'AI evaluation of free-form written answers', s: 'todo',
+        note: 'Needs the provider key. The point-based marking above is the no-model version.' },
       { t: 'Previous-year-questions layer', s: 'block', owner: 'client',
         note: 'Board question papers and textbooks are copyrighted. You have said you will secure the approvals — this starts once they are in hand.' }
     ]
@@ -441,6 +465,18 @@ window.SHOTS = [
     caption: 'Phase 10 — data rights that actually work. The export is the real stored record; the deletion really deletes.' },
   { src: 'screenshots/p10-03-phone-cost.png',
     caption: 'Phase 10 — the cost model on a phone.' },
+  { src: 'screenshots/p4-01-exam-intro.png',
+    caption: 'Phase 4 — the paper before you start: sections, marks, time, and how an exam differs from practice.' },
+  { src: 'screenshots/p4-03-exam-types.png',
+    caption: 'Phase 4 — assertion-reason in the CBSE format, true/false, and a written short answer. Each question type gets the input it actually needs.' },
+  { src: 'screenshots/p4-02-exam-paper.png',
+    caption: 'Phase 4 — sitting the paper, with the clock and the answered count pinned to the top so they stay visible while scrolling.' },
+  { src: 'screenshots/p4-04-exam-report.png',
+    caption: 'Phase 4 — the result, split into careless slips and genuine concept gaps rather than one number.' },
+  { src: 'screenshots/p4-05-report-breakdown.png',
+    caption: 'Phase 4 — question by question, with the working shown whether the answer was right or wrong.' },
+  { src: 'screenshots/p4-06-phone-exam.png',
+    caption: 'Phase 4 — the same paper on a phone.' },
   { src: 'screenshots/sec-01-xss-escaped.png',
     caption: 'Security review — a script-injection payload entered as the student name, shown here rendered as harmless text on the parent dashboard. It did not execute anywhere it is echoed.' }
 ];
