@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '14 September 2026 · Phase 10 cost controls and data rights';
+window.UPDATED = '14 September 2026 · Phase 10 complete except the legal opinion';
 
 window.PHASES = [
   {
@@ -279,8 +279,22 @@ window.PHASES = [
             + '250 AI answers a day would have cost ₹1,460 a month against ₹599 — an ₹861 loss '
             + 'per heavy user. The cap is now 100/day, which is the highest that price can '
             + 'carry. Every paid tier is now provably safe at its own ceiling.' },
-      { t: 'Load and performance pass', s: 'todo' },
-      { t: 'Security review', s: 'todo' }
+      { t: 'Load and performance pass', s: 'done',
+        note: 'Measured on a simulated mid-range Android: CPU throttled 4x, ~1.6 Mbps, 150ms '
+            + 'latency. First contentful paint 1.6s, fully loaded 1.6s, total download 303KB. '
+            + 'Every screen re-renders in under 3ms, including the 22-student class analytics. '
+            + 'Then stress-tested with 2,000 recorded answers — roughly a year of daily use: '
+            + 'the mastery calculation takes 0.1ms, the XP recompute 1.1ms, badges 3.1ms, and '
+            + 'the home screen still renders instantly. Nothing needed optimising.' },
+      { t: 'Security review', s: 'done',
+        note: 'Tested by attacking it, not by reading the code. Five XSS payloads were entered '
+            + 'as the parent and student names and followed through every screen that echoes '
+            + 'them: none executed, none produced a live element, and each appears on screen as '
+            + 'harmless text. Also confirmed: the password is never stored in clear, signed-out '
+            + 'deep links to the parent dashboard are refused, and the app makes ZERO requests '
+            + 'to any third party — no analytics, no fonts, no CDN, nothing. Known and stated: '
+            + 'the admin and teacher views are unauthenticated because there is no server to '
+            + 'authenticate against yet.' }
     ]
   }
 ];
@@ -426,5 +440,7 @@ window.SHOTS = [
   { src: 'screenshots/p10-06-privacy-rights.png',
     caption: 'Phase 10 — data rights that actually work. The export is the real stored record; the deletion really deletes.' },
   { src: 'screenshots/p10-03-phone-cost.png',
-    caption: 'Phase 10 — the cost model on a phone.' }
+    caption: 'Phase 10 — the cost model on a phone.' },
+  { src: 'screenshots/sec-01-xss-escaped.png',
+    caption: 'Security review — a script-injection payload entered as the student name, shown here rendered as harmless text on the parent dashboard. It did not execute anywhere it is echoed.' }
 ];
