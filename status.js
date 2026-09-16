@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '14 September 2026 · Phase 4 examination engine built';
+window.UPDATED = '14 September 2026 · content authoring tool built';
 
 window.PHASES = [
   {
@@ -76,11 +76,20 @@ window.PHASES = [
         note: 'Resolves transitively, so "weak at lenses because refraction is weak" is computed '
             + 'rather than guessed. Cycles and prerequisites pointing outside the syllabus are '
             + 'validation errors, not surprises found in production.' },
-      { t: 'Content admin panel — browse, inspect and validate', s: 'prog',
-        note: 'Built and working: syllabus switching, statistics, the full curriculum tree with '
-            + 'question-difficulty coverage per concept, validation, and version history. NOT yet '
-            + 'built: creating and editing content in the panel, and the reviewer approval workflow. '
-            + 'Those need the backend and a login to attach an approver identity to.' },
+      { t: 'Content admin panel — browse, inspect and validate', s: 'done',
+        note: 'Syllabus switching, statistics, the full curriculum tree with question-difficulty '
+            + 'coverage per concept, validation, and version history.' },
+      { t: 'Content authoring — write and edit a concept without a developer', s: 'done',
+        note: 'Built for a subject teacher, not a programmer. Every field of a concept — the four '
+            + 'explanations, objectives, formulae, common mistakes and questions — with live '
+            + 'validation against the SAME rules the publication pipeline enforces, so nothing is '
+            + 'discovered at hand-over. It exports a file in exactly the shape the engine reads. '
+            + 'Proved by round-trip: a concept written in the browser, exported, then fed through '
+            + 'the platform validator — zero errors. This is what turns "a developer is needed for '
+            + 'every chapter" into "a teacher is needed for every chapter", and content is the real '
+            + 'bottleneck of this business.' },
+      { t: 'Reviewer approval workflow (who signed it off, and when)', s: 'todo',
+        note: 'Needs the backend and a login, so an approval can be attached to a named person.' },
       { t: 'Academic-year versioning (old syllabus never overwritten)', s: 'done',
         note: 'A syllabus has effectiveFrom / effectiveTo dates and is never edited in place. A '
             + 'child\'s syllabus is resolved once at registration and stored by id, so next year\'s '
@@ -465,6 +474,12 @@ window.SHOTS = [
     caption: 'Phase 10 — data rights that actually work. The export is the real stored record; the deletion really deletes.' },
   { src: 'screenshots/p10-03-phone-cost.png',
     caption: 'Phase 10 — the cost model on a phone.' },
+  { src: 'screenshots/auth-01-editor.png',
+    caption: 'Content authoring — an empty concept, with the eight things blocking publication listed before a word is written. Checked against the same rules the platform enforces.' },
+  { src: 'screenshots/auth-03-export.png',
+    caption: 'Content authoring — the finished concept exported in exactly the shape the engine reads. Verified by round-trip: written here, exported, then validated by the platform with zero errors.' },
+  { src: 'screenshots/auth-04-phone.png',
+    caption: 'Content authoring on a phone.' },
   { src: 'screenshots/p4-01-exam-intro.png',
     caption: 'Phase 4 — the paper before you start: sections, marks, time, and how an exam differs from practice.' },
   { src: 'screenshots/p4-03-exam-types.png',
