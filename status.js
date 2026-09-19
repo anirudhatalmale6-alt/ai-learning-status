@@ -14,7 +14,7 @@
    say plainly whose move it is instead of leaving it looking like slippage.
 --------------------------------------------------------------------------- */
 
-window.UPDATED = '14 September 2026 · content authoring tool built';
+window.UPDATED = '19 September 2026 · school dashboard and tenant isolation';
 
 window.PHASES = [
   {
@@ -216,8 +216,20 @@ window.PHASES = [
             + 'learning objectives and common-mistake list. Deliberately not an AI feature — no '
             + 'model is needed to do the useful part.' },
       { t: 'AI teaching assistant — generate tests, worksheets, remedial lessons', s: 'todo' },
-      { t: 'School tenant isolation', s: 'todo' },
-      { t: 'School-wide analytics', s: 'todo' }
+      { t: 'School tenant isolation', s: 'done',
+        note: 'Two schools share the demonstration deployment, and the boundary is CHECKED on '
+            + 'the page rather than asserted in a document: a teacher reaches their own class '
+            + 'only, a head teacher reaches every class in their own school, and a request for '
+            + 'another school returns null — not an empty list, because an empty list still tells '
+            + 'you the school exists. One head teacher seeing another school\'s results is a '
+            + 'contract-ending incident, and this is far cheaper to build now than to retrofit.' },
+      { t: 'School-wide analytics', s: 'done',
+        note: 'Separates two problems that need opposite responses. A concept that is weak in '
+            + 'EVERY class with no spread is a year-group problem — the material is hard, re-teach '
+            + 'it to everyone. A concept with a 20-point gap between classes is being taught '
+            + 'differently somewhere, which is a conversation. Deliberately absent: any ranking of '
+            + 'named children, and any league table of teachers — a class average reflects who is '
+            + 'in the class as much as who teaches it, and the page says so.' }
     ]
   },
   {
@@ -474,6 +486,12 @@ window.SHOTS = [
     caption: 'Phase 10 — data rights that actually work. The export is the real stored record; the deletion really deletes.' },
   { src: 'screenshots/p10-03-phone-cost.png',
     caption: 'Phase 10 — the cost model on a phone.' },
+  { src: 'screenshots/p6b-01-school.png',
+    caption: 'School dashboard — the two findings that matter, kept apart: one concept the whole year group needs re-taught, and two being taught unevenly between classes.' },
+  { src: 'screenshots/p6b-03-isolation.png',
+    caption: 'Tenant isolation checked live on the page. A teacher is refused the other school entirely; cross-school analytics return nothing at all.' },
+  { src: 'screenshots/p6b-04-second-school.png',
+    caption: 'Switching school returns entirely different data — different classes, different students, nothing shared.' },
   { src: 'screenshots/auth-01-editor.png',
     caption: 'Content authoring — an empty concept, with the eight things blocking publication listed before a word is written. Checked against the same rules the platform enforces.' },
   { src: 'screenshots/auth-03-export.png',
